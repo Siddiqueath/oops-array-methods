@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OOPs and Array methods task</title>
+</head>
+<body>
+  <script>
+    //OOPS TASK
+     class Movie {
+        //a) Write a constructor for the class Movie, which takes a String representing the title of the movie, a String representing the studio, and a String representing the rating as its arguments, and sets the respective class properties to these values.
+        constructor(title, studio, rating) {
+            this.title = title;
+            this.studio = studio;
+    
+            //b) The constructor for the class Movie will set the class property rating to "PG" as default when no rating is provided.
+            this.rating = (rating !== undefined) ? rating : 'PG';
+        }
+    
+        //c) Write a method getPG, which takes an array of base type Movie as its argument, and returns a new array of only those movies in the input array with a rating of "PG". You may assume the input array is full of Movie instances. The returned array need not be full.
+        static getPG(movieList) {
+            let moviePG = [];
+            for (let obj of movieList)
+                if (obj.rating == 'PG')
+                    moviePG.push(obj);
+            return moviePG;
+            }
+    }
+    let mov1 = new Movie('avatar', 'lyca', 'G');
+    let mov2 = new Movie('avengers', 'marvel');
+    let mov3 = new Movie('dark knight', 'jokeron');
+    let mov4 = new Movie('red light', 'thorn', 'X');
+    
+    //d) Write a piece of code that creates an instance of the class Movie with the title “Casino Royale”, the studio “Eon Productions”, and the rating “PG­13”
+    let mov5 = new Movie('Casino Royale', 'Eon Productions', 'PG13');
+
+    console.log(Movie.getPG([mov1, mov2, mov3, mov4, mov5]));
+
+    //Write a “person” class to hold all the details.
+    class person {
+        constructor(name, age, gender, dateOfBirth, maritalStatus) {
+            this.name = name;
+            this.age = age;
+            this.gender = gender;
+            this.dateOfBirth = dateOfBirth;
+            this.maritalStatus = maritalStatus;
+        }
+    }
+    let person1 = new person("Rutherford", "25", "male", "30-August-1871", "married");
+    console.log(person1);
+
+    //write a class to calculate uber price.
+    class UberFare {
+        constructor(traveledKM) {
+            this.perKM = 12;
+            this.traveledKM = traveledKM;
+        }
+        get fare() {
+            return this.perKM * this.traveledKM;
+        }
+    }
+    const f = new UberFare(22);
+    console.log('₹'+f.fare); 
+
+    //ARRAY METHODS
+    async function foo() {
+        try {
+            let res = await fetch("https://restcountries.com/v2/all");
+            res = await res.json();
+            console.log(res);
+            
+            //Get all the countries from Asia continent /region using Filter function
+            let asianCoun = res.filter(country => country.region === 'Asia');
+            console.log(asianCoun);
+            
+            //Get all the countries with a population of less than 2 lakhs using Filter function
+            let lessPop = res.filter(country => country.population < 200000);
+            console.log(lessPop);
+            
+            //Print the following details name, capital, flag using forEach function
+            res.forEach(country => console.log(`name: ${country.name}
+capital: ${country.capital} 
+flag: ${country.flag}`));
+    
+            //Print the total population of countries using reduce function
+            let totPopulation = res.reduce((sum, country) => sum + country.population, 0);
+            console.log(totPopulation);
+
+            //Print the country which uses US Dollars as currency.
+            res.forEach(country => {
+                if(country.currencies !== undefined)
+                    for(const elem of country.currencies)
+                        if(elem.code === 'USD')
+                            console.log(country);
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    foo();
+  </script>
+</body>
+</html>
